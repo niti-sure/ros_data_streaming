@@ -22,7 +22,7 @@
   
   <node name="video_recorder" pkg="image_view" type="video_recorder" output="screen">
     <param name="image" value="/usb_cam/image_raw" />
-    <param name="_filename" value="/home/nitika/catkin_ws/images/" />
+    <param name="filename" value="/home/nitika/catkin_ws/images/video.avi" />
   </node>
   
   <node name="time_syncer" pkg="synchronize" type="time_sync.py" output="screen"> </node>
