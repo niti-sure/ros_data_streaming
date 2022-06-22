@@ -1,0 +1,30 @@
+<launch>
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+  </node>
+  
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+    <param name="image_transport" value="compressed" />
+  </node>
+  
+  
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen">
+    <param name="port" type="string" value="/dev/ttyACM0" />
+    <param name="baud" type="int" value="57600" />
+  </node>
+  
+  <node name="video_recorder" pkg="image_view" type="video_recorder" output="screen">
+    <param name="image" value="/usb_cam/image_raw" />
+    <param name="_filename" value="/home/nitika/catkin_ws/images/" />
+  </node>
+  
+  <node name="time_syncer" pkg="synchronize" type="time_sync.py" output="screen"> </node>
+  
+</launch>
